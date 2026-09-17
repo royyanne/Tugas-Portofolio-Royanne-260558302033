@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habib Arroyyan — Portfolio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#E50914',
+                            'red-hover': '#B81D24',
+                            dark: '#0A0A0A',
+                            card: '#141414',
+                            border: '#262626'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%, 100%': { opacity: 0.4, transform: 'scale(1)' },
+                            '50%': { opacity: 0.8, transform: 'scale(1.05)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0A0A0A;
+            color: #FFFFFF;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A0A0A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E50914;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B81D24;
+        }
+
+        /* Red Accent Text Highlight */
+        .text-gradient {
+            background: linear-gradient(135deg, #FFFFFF 0%, #E50914 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        /* Smooth Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .red-glow {
+            box-shadow: 0 0 35px -5px rgba(229, 9, 20, 0.3);
+        }
+        
+        .red-glow-sm {
+            box-shadow: 0 0 15px 0px rgba(229, 9, 20, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-white selection:bg-brand-red selection:text-white relative overflow-x-hidden">
+
+    <!-- Background Red Glow Effect -->
+    <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-brand-red/15 blur-[120px] rounded-full pointer-events-none z-0 animate-pulse-glow"></div>
+    <div class="fixed bottom-0 right-0 w-[500px] h-[500px] bg-brand-red/10 blur-[150px] rounded-full pointer-events-none z-0"></div>
+
+    <!-- Header / Navbar -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-5 px-6 md:px-12 backdrop-blur-md border-b border-transparent">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#hero" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-lg bg-brand-red text-white font-black flex items-center justify-center text-xl tracking-tighter transition-transform group-hover:scale-105 shadow-lg shadow-brand-red/30">
+                    HA
+                </div>
+                <span class="font-bold text-lg tracking-wide hidden sm:inline-block">
+                    Habib<span class="text-brand-red">.</span>Arroyyan
+                </span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-300">
+                <a href="#about" class="hover:text-brand-red transition-colors">Tentang</a>
+                <a href="#skills" class="hover:text-brand-red transition-colors">Keahlian</a>
+                <a href="#projects" class="hover:text-brand-red transition-colors">Proyek</a>
+                <a href="#experience" class="hover:text-brand-red transition-colors">Pengalaman</a>
+                <a href="#contact" class="hover:text-brand-red transition-colors">Kontak</a>
+            </nav>
+
+            <!-- CTA Button -->
+            <div class="hidden md:flex items-center">
+                <a href="#contact" class="px-5 py-2.5 rounded-full bg-brand-red hover:bg-brand-red-hover text-white text-sm font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-brand-red/40 hover:-translate-y-0.5">
+                    Hubungi Saya
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="menu-btn" class="md:hidden text-neutral-200 hover:text-white text-2xl focus:outline-none" aria-label="Toggle Navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-brand-card border-b border-brand-border py-6 px-6 flex flex-col gap-4 text-center text-neutral-300 shadow-2xl">
+            <a href="#about" class="mobile-link py-2 hover:text-brand-red font-medium">Tentang</a>
+            <a href="#skills" class="mobile-link py-2 hover:text-brand-red font-medium">Keahlian</a>
+            <a href="#projects" class="mobile-link py-2 hover:text-brand-red font-medium">Proyek</a>
+            <a href="#experience" class="mobile-link py-2 hover:text-brand-red font-medium">Pengalaman</a>
+            <a href="#contact" class="mobile-link py-2 hover:text-brand-red font-medium">Kontak</a>
+            <a href="#contact" class="mobile-link mt-2 py-3 rounded-xl bg-brand-red text-white font-semibold text-sm">Hubungi Saya</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative pt-36 pb-24 md:pt-48 md:pb-32 px-6 md:px-12 bg-grid-pattern min-h-screen flex items-center">
+        <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Left Column: Content -->
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left reveal active">
+                
+                <!-- Status Badge -->
+                <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-brand-card border border-brand-border text-xs md:text-sm font-medium text-neutral-300">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 -ml-5"></span>
+                    <span>Siap untuk Proyek Baru & Kolaborasi</span>
+                </div>
+
+                <!-- Main Headline -->
+                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight">
+                    Halo, Saya <br class="hidden sm:inline" />
+                    <span class="text-gradient">Habib Arroyyan</span>
+                </h1>
+
+                <!-- Subtitle with Typing Animation -->
+                <p class="text-lg md:text-xl text-neutral-400 max-w-2xl font-light leading-relaxed mx-auto lg:mx-0">
+                    Seorang <span id="typed-text" class="text-white font-semibold border-b-2 border-brand-red pb-0.5"></span> 
+                    yang berfokus membangun produk digital berkualitas tinggi, elegan, dan fungsional.
+                </p>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
+                    <a href="#projects" class="px-7 py-3.5 rounded-full bg-brand-red hover:bg-brand-red-hover text-white font-semibold text-sm transition-all duration-300 shadow-lg shadow-brand-red/30 hover:shadow-brand-red/50 hover:-translate-y-1 flex items-center gap-2">
+                        <span>Lihat Portfolio</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                    <a href="#contact" class="px-7 py-3.5 rounded-full bg-brand-card border border-brand-border hover:border-brand-red text-white font-semibold text-sm transition-all duration-300 hover:bg-neutral-900 hover:-translate-y-1">
+                        Diskusi Proyek
+                    </a>
+                </div>
+
+                <!-- Quick Social Links -->
+                <div class="pt-6 flex items-center justify-center lg:justify-start gap-5 text-neutral-400">
+                    <span class="text-xs font-semibold tracking-wider uppercase text-neutral-500">Temukan Saya:</span>
+                    <a href="https://github.com" target="_blank" class="hover:text-brand-red transition-colors text-xl" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://linkedin.com" target="_blank" class="hover:text-brand-red transition-colors text-xl" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://instagram.com" target="_blank" class="hover:text-brand-red transition-colors text-xl" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="mailto:habibarroyyan@example.com" class="hover:text-brand-red transition-colors text-xl" title="Email"><i class="fa-solid fa-envelope"></i></a>
+                </div>
+            </div>
+
+            <!-- Right Column: Avatar / Decorative Card -->
+            <div class="lg:col-span-5 flex justify-center reveal">
+                <div class="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96">
+                    <!-- Outer Glowing Rings -->
+                    <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-brand-red to-neutral-800 rotate-6 opacity-80 blur-sm"></div>
+                    <div class="absolute inset-0 rounded-3xl bg-brand-card border border-brand-border p-4 shadow-2xl flex flex-col justify-between overflow-hidden">
+                        
+                        <!-- Header Graphics -->
+                        <div class="flex items-center justify-between border-b border-brand-border/60 pb-3">
+                            <div class="flex gap-1.5">
+                                <span class="w-3 h-3 rounded-full bg-brand-red inline-block"></span>
+                                <span class="w-3 h-3 rounded-full bg-neutral-600 inline-block"></span>
+                                <span class="w-3 h-3 rounded-full bg-neutral-700 inline-block"></span>
+                            </div>
+                            <span class="text-[10px] font-mono text-neutral-500">developer.profile</span>
+                        </div>
+
+                        <!-- Profile Avatar Card Center Content -->
+                        <div class="my-auto text-center space-y-4">
+                            <div class="relative inline-block">
+                                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-gradient-to-b from-neutral-800 to-brand-card p-1 mx-auto border-2 border-brand-red/60 shadow-xl">
+                                    <div class="w-full h-full rounded-full bg-neutral-900 flex items-center justify-center overflow-hidden">
+                                        <i class="fa-solid fa-user-astronaut text-5xl text-brand-red animate-float"></i>
+                                    </div>
+                                </div>
+                                <span class="absolute bottom-1 right-1 bg-brand-red text-white text-[10px] font-bold px-2 py-0.5 rounded-full border-2 border-brand-card">PRO</span>
+                            </div>
+
+                            <div>
+                                <h3 class="font-bold text-lg text-white">Habib Arroyyan</h3>
+                                <p class="text-xs text-neutral-400">Software & Web Developer</p>
+                            </div>
+                        </div>
+
+                        <!-- Footer Info Badges -->
+                        <div class="bg-neutral-900/80 rounded-xl p-3 border border-brand-border/40 grid grid-cols-2 gap-2 text-center">
+                            <div>
+                                <p class="text-[10px] text-neutral-500 uppercase tracking-wider font-semibold">Pengalaman</p>
+                                <p class="text-sm font-bold text-white">3+ Tahun</p>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-neutral-500 uppercase tracking-wider font-semibold">Proyek Selesai</p>
+                                <p class="text-sm font-bold text-brand-red">25+ Web</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-6 md:px-12 border-t border-brand-border relative">
+        <div class="max-w-7xl mx-auto">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4 reveal">
+                <div>
+                    <p class="text-brand-red font-semibold text-sm tracking-wider uppercase mb-2">// Tentang Saya</p>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-white">Mengubah Ide Menjadi Realitas Digital</h2>
+                </div>
+                <p class="text-neutral-400 text-sm max-w-md">
+                    Berkomitmen menghadirkan solusi teknologi modern dengan kombinasi estetika visual dan performa yang optimal.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-brand-card p-8 rounded-2xl border border-brand-border hover:border-brand-red/50 transition-all duration-300 group reveal">
+                    <div class="w-12 h-12 rounded-xl bg-brand-red/10 border border-brand-red/20 text-brand-red flex items-center justify-center text-xl mb-6 group-hover:bg-brand-red group-hover:text-white transition-all duration-300">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Clean Code & Struktur</h3>
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        Menulis kode yang bersih, terstruktur, mudah dirawat, serta mengikuti standar industri terkini untuk keberlanjutan proyek jangka panjang.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-brand-card p-8 rounded-2xl border border-brand-border hover:border-brand-red/50 transition-all duration-300 group reveal">
+                    <div class="w-12 h-12 rounded-xl bg-brand-red/10 border border-brand-red/20 text-brand-red flex items-center justify-center text-xl mb-6 group-hover:bg-brand-red group-hover:text-white transition-all duration-300">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Desain Modern & UI/UX</h3>
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        Fokus pada kenyamanan pengguna dengan antarmuka yang bersih, responsif, intuitif, dan visual yang memikat di segala perangkat.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-brand-card p-8 rounded-2xl border border-brand-border hover:border-brand-red/50 transition-all duration-300 group reveal">
+                    <div class="w-12 h-12 rounded-xl bg-brand-red/10 border border-brand-red/20 text-brand-red flex items-center justify-center text-xl mb-6 group-hover:bg-brand-red group-hover:text-white transition-all duration-300">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Performa & Kecepatan</h3>
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        Optimasi menyeluruh untuk memastikan aplikasi web memuat dengan sangat cepat, mulus, dan efisien secara konsumsi daya/data.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 px-6 md:px-12 bg-neutral-950 border-t border-brand-border">
+        <div class="max-w-7xl mx-auto">
+            
+            <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+                <p class="text-brand-red font-semibold text-sm tracking-wider uppercase mb-2">// Keahlian & Teknologi</p>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white">Stack Teknologi Utama</h2>
+                <p class="text-neutral-400 text-sm mt-3">Beberapa alat dan bahasa pemrograman yang biasa saya gunakan sehari-hari.</p>
+            </div>
+
+            <!-- Skills Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+                
+                <!-- Skill Item -->
+                <div class="bg-brand-card p-5 rounded-2xl border border-brand-border hover:border-brand-red transition-all duration-300 text-center group hover:-translate-y-1 reveal">
+                    <div class="w-12 h-12 mx-auto mb-3 flex items-center justify-center text-3xl text-neutral-300 group-hover:text-brand-red transition-colors">
+                        <i class="fa-brands fa-html5"></i>
+                    </div>
+                    <h4 class="font-bold text-sm text-white">HTML5 & CSS3</h4>
+                    <p class="text-[11px] text-neutral-500 mt-1">Sangat Ahli</p>
+                </div>
+
+                <!-- Skill Item -->
+                <div class="bg-brand-card p-5 rounded-2xl border border-brand-border hover:border-brand-red transition-all duration-300 text-center group hover:-translate-y-1 reveal">
+                    <div class="w-12 h-12 mx-auto mb-3 flex items-center justify-center text-3xl text-neutral-300 group-hover:text-brand-red transition-colors">
+                        <i class="fa-brands fa-square-js"></i>
+                    </div>
+                    <h4 class="font-bold text-sm text-white">JavaScript</h4>
+                    <p class="text-[11px] text-neutral-500 mt-1">ES6+ / Async</p>
+                </div>
+
+                <!-- Skill Item -->
+                <div class="bg-brand-card p-5 rounded-2xl border border-brand-border hover:border-brand-red transition-all duration-300 text-center group hover:-translate-y-1 reveal">
+                    <div class="w-12 h-12 mx-auto mb-3 flex items-center justify-center text-3xl text-neutral-300 group-hover:text-brand-red transition-colors">
+                        <i class="fa-brands fa-react"></i>
+                    </div>
+                    <h4 class="font-bold text-sm text-white">React / Next.js</h4>
+                    <p class="text-[11px] text-neutral-500 mt-1">Frontend App</p>
+                </div>
+
+                <!-- Skill Item -->
+                <div class="bg-brand-card p-5 rounded-2xl border border-brand-border hover:border-brand-red transition-all duration-300 text-center group hover:-translate-y-1 reveal">
+                    <div class="w-12 h-12 mx-auto mb-3 flex items-center justify-center text-3xl text-neutral-300 group-hover:text-brand-red transition-colors">
+                        <i class="fa-brands fa-node-js"></i>
+                    </div>
+                    <h4 class="font-bold text-sm text-white">Node.js</h4>
+                    <p class="text-[11px] text-neutral-500 mt-1">Backend API</p>
+                </div>
+
+                <!-- Skill Item -->
+                <div class="bg-brand-card p-5 rounded-2xl border border-brand-border hover:border-brand-red transition-all duration-300 text-center group hover:-translate-y-1 reveal">
+                    <div class="w-12 h-12 mx-auto mb-3 flex items-center justify-center text-3xl text-neutral-300 group-hover:text-brand-red transition-colors">
+                        <i class="fa-solid fa-code font-bold text-2xl"></i>
+                    </div>
+                    <h4 class="font-bold text-sm text-white">Tailwind CSS</h4>
+                    <p class="text-[11px] text-neutral-500 mt-1">Styling Expert</p>
+                </div>
+
+                <!-- Skill Item -->
+                <div class="bg-brand-card p-5 rounded-2xl border border-brand-border hover:border-brand-red transition-all duration-300 text-center group hover:-translate-y-1 reveal">
+                    <div class="w-12 h-12 mx-auto mb-3 flex items-center justify-center text-3xl text-neutral-300 group-hover:text-brand-red transition-colors">
+                        <i class="fa-brands fa-git-alt"></i>
+                    </div>
+                    <h4 class="font-bold text-sm text-white">Git & GitHub</h4>
+                    <p class="text-[11px] text-neutral-500 mt-1">Version Control</p>
+                </div>
+
+            </div>
+
+            <!-- Additional Micro Skills Tags -->
+            <div class="mt-10 flex flex-wrap justify-center gap-3 reveal">
+                <span class="px-4 py-1.5 rounded-full bg-brand-card border border-brand-border text-xs text-neutral-300">REST APIs</span>
+                <span class="px-4 py-1.5 rounded-full bg-brand-card border border-brand-border text-xs text-neutral-300">PostgreSQL / MongoDB</span>
+                <span class="px-4 py-1.5 rounded-full bg-brand-card border border-brand-border text-xs text-neutral-300">Figma UI/UX</span>
+                <span class="px-4 py-1.5 rounded-full bg-brand-card border border-brand-border text-xs text-neutral-300">TypeScript</span>
+                <span class="px-4 py-1.5 rounded-full bg-brand-card border border-brand-border text-xs text-neutral-300">Responsive Web Design</span>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 px-6 md:px-12 border-t border-brand-border">
+        <div class="max-w-7xl mx-auto">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 reveal">
+                <div>
+                    <p class="text-brand-red font-semibold text-sm tracking-wider uppercase mb-2">// Karya Terpilih</p>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-white">Proyek Terbaru Habib</h2>
+                </div>
+
+                <!-- Category Filters -->
+                <div class="flex flex-wrap gap-2 text-xs font-semibold" id="project-filters">
+                    <button data-filter="all" class="filter-btn active px-4 py-2 rounded-full bg-brand-red text-white transition-all">Semua</button>
+                    <button data-filter="web" class="filter-btn px-4 py-2 rounded-full bg-brand-card border border-brand-border text-neutral-300 hover:border-brand-red transition-all">Web App</button>
+                    <button data-filter="design" class="filter-btn px-4 py-2 rounded-full bg-brand-card border border-brand-border text-neutral-300 hover:border-brand-red transition-all">UI/UX</button>
+                </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Project Card 1 -->
+                <div class="project-item web group bg-brand-card rounded-2xl overflow-hidden border border-brand-border hover:border-brand-red/60 transition-all duration-300 hover:-translate-y-2 reveal">
+                    <div class="relative h-52 bg-neutral-900 overflow-hidden flex items-center justify-center p-6">
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-card to-transparent z-10 opacity-70"></div>
+                        <!-- Mock Preview Graphics -->
+                        <div class="w-full h-full rounded-lg bg-neutral-800 border border-neutral-700/60 p-3 shadow-2xl transition-transform duration-500 group-hover:scale-105">
+                            <div class="flex items-center gap-1.5 mb-2">
+                                <span class="w-2 h-2 rounded-full bg-brand-red"></span>
+                                <span class="w-2 h-2 rounded-full bg-neutral-600"></span>
+                                <span class="w-2 h-2 rounded-full bg-neutral-600"></span>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="h-4 bg-neutral-700 rounded w-2/3"></div>
+                                <div class="h-16 bg-neutral-700/40 rounded w-full"></div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div class="h-8 bg-brand-red/30 rounded"></div>
+                                    <div class="h-8 bg-neutral-700/30 rounded"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 relative z-20">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-[10px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-brand-red/20 text-brand-red border border-brand-red/30">React & Node.js</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-brand-red transition-colors mb-2">OmniSphere E-Commerce</h3>
+                        <p class="text-neutral-400 text-xs line-clamp-2 mb-4 leading-relaxed">
+                            Platform toko online modern dengan pembayaran terintegrasi, inventaris realtime, dan antarmuka super cepat.
+                        </p>
+                        <div class="flex items-center justify-between pt-2 border-t border-brand-border/60">
+                            <a href="#" class="text-xs font-semibold text-white hover:text-brand-red flex items-center gap-1">
+                                Demo Langsung <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </a>
+                            <a href="#" class="text-neutral-400 hover:text-white text-base" title="Source Code">
+                                <i class="fa-brands fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="project-item web group bg-brand-card rounded-2xl overflow-hidden border border-brand-border hover:border-brand-red/60 transition-all duration-300 hover:-translate-y-2 reveal">
+                    <div class="relative h-52 bg-neutral-900 overflow-hidden flex items-center justify-center p-6">
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-card to-transparent z-10 opacity-70"></div>
+                        <!-- Mock Preview Graphics -->
+                        <div class="w-full h-full rounded-lg bg-neutral-800 border border-neutral-700/60 p-3 shadow-2xl transition-transform duration-500 group-hover:scale-105">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-[10px] text-brand-red font-mono">ANALYTICS DASHBOARD</span>
+                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            </div>
+                            <div class="flex items-end gap-2 h-20 pt-4">
+                                <div class="w-1/5 bg-neutral-700 h-12 rounded-t"></div>
+                                <div class="w-1/5 bg-brand-red h-18 rounded-t"></div>
+                                <div class="w-1/5 bg-neutral-700 h-10 rounded-t"></div>
+                                <div class="w-1/5 bg-neutral-600 h-14 rounded-t"></div>
+                                <div class="w-1/5 bg-brand-red/70 h-16 rounded-t"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 relative z-20">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-[10px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-brand-red/20 text-brand-red border border-brand-red/30">Next.js & Tailwind</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-brand-red transition-colors mb-2">NexaDash AI Analytics</h3>
+                        <p class="text-neutral-400 text-xs line-clamp-2 mb-4 leading-relaxed">
+                            Dashboard analitik data bisnis berbasis AI dengan grafik interaktif dan visualisasi performa waktu nyata.
+                        </p>
+                        <div class="flex items-center justify-between pt-2 border-t border-brand-border/60">
+                            <a href="#" class="text-xs font-semibold text-white hover:text-brand-red flex items-center gap-1">
+                                Demo Langsung <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </a>
+                            <a href="#" class="text-neutral-400 hover:text-white text-base" title="Source Code">
+                                <i class="fa-brands fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="project-item design group bg-brand-card rounded-2xl overflow-hidden border border-brand-border hover:border-brand-red/60 transition-all duration-300 hover:-translate-y-2 reveal">
+                    <div class="relative h-52 bg-neutral-900 overflow-hidden flex items-center justify-center p-6">
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-card to-transparent z-10 opacity-70"></div>
+                        <!-- Mock Preview Graphics -->
+                        <div class="w-full h-full rounded-lg bg-neutral-800 border border-neutral-700/60 p-3 shadow-2xl flex flex-col justify-center items-center text-center transition-transform duration-500 group-hover:scale-105">
+                            <div class="w-12 h-12 rounded-full bg-brand-red/20 border border-brand-red flex items-center justify-center text-brand-red mb-2">
+                                <i class="fa-solid fa-mobile-screen text-xl"></i>
+                            </div>
+                            <span class="text-xs font-bold text-white">PayPulse App Redesign</span>
+                            <span class="text-[10px] text-neutral-400">Figma Mobile System</span>
+                        </div>
+                    </div>
+
+                    <div class="p-6 relative z-20">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-[10px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-brand-red/20 text-brand-red border border-brand-red/30">Figma / UI UX</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-brand-red transition-colors mb-2">PayPulse Digital Wallet</h3>
+                        <p class="text-neutral-400 text-xs line-clamp-2 mb-4 leading-relaxed">
+                            Redesain antarmuka aplikasi dompet digital dengan fokus kemudahan transaksi dan aksesibilitas pengguna.
+                        </p>
+                        <div class="flex items-center justify-between pt-2 border-t border-brand-border/60">
+                            <a href="#" class="text-xs font-semibold text-white hover:text-brand-red flex items-center gap-1">
+                                Lihat Figma Prototype <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </a>
+                            <a href="#" class="text-neutral-400 hover:text-white text-base" title="Behance / Design">
+                                <i class="fa-brands fa-figma"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Experience & Education Section -->
+    <section id="experience" class="py-20 px-6 md:px-12 bg-neutral-950 border-t border-brand-border">
+        <div class="max-w-5xl mx-auto">
+            
+            <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+                <p class="text-brand-red font-semibold text-sm tracking-wider uppercase mb-2">// Perjalanan Karir</p>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white">Pengalaman & Rekam Jejak</h2>
+            </div>
+
+            <div class="relative border-l-2 border-brand-border ml-4 md:ml-32 space-y-12">
+                
+                <!-- Timeline Item 1 -->
+                <div class="relative pl-8 md:pl-10 reveal">
+                    <!-- Dot Marker -->
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-brand-red ring-4 ring-brand-dark"></div>
+                    
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-1 mb-2">
+                        <h3 class="text-lg font-bold text-white">Full Stack Web Developer</h3>
+                        <span class="text-xs font-semibold px-3 py-1 rounded-full bg-brand-card border border-brand-border text-brand-red w-fit">2023 — Sekarang</span>
+                    </div>
+                    <p class="text-xs font-semibold text-neutral-400 mb-3">Freelance / Studio Digital</p>
+                    <p class="text-neutral-400 text-sm leading-relaxed bg-brand-card p-5 rounded-2xl border border-brand-border">
+                        Merancang dan mengimplementasikan aplikasi web khusus untuk berbagai klien. Mengembangkan arsitektur backend, integrasi API, serta antarmuka pengguna yang teroptimasi.
+                    </p>
+                </div>
+
+                <!-- Timeline Item 2 -->
+                <div class="relative pl-8 md:pl-10 reveal">
+                    <!-- Dot Marker -->
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-neutral-700 ring-4 ring-brand-dark"></div>
+                    
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-1 mb-2">
+                        <h3 class="text-lg font-bold text-white">Frontend Developer Intern</h3>
+                        <span class="text-xs font-semibold px-3 py-1 rounded-full bg-brand-card border border-brand-border text-neutral-400 w-fit">2022 — 2023</span>
+                    </div>
+                    <p class="text-xs font-semibold text-neutral-400 mb-3">Tech Agency Studio</p>
+                    <p class="text-neutral-400 text-sm leading-relaxed bg-brand-card p-5 rounded-2xl border border-brand-border">
+                        Berkolaborasi dengan tim desainer untuk merespon desain UI/UX ke dalam bentuk kode HTML, CSS, dan React JS yang responsif serta bebas bug.
+                    </p>
+                </div>
+
+                <!-- Timeline Item 3 -->
+                <div class="relative pl-8 md:pl-10 reveal">
+                    <!-- Dot Marker -->
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-neutral-700 ring-4 ring-brand-dark"></div>
+                    
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-1 mb-2">
+                        <h3 class="text-lg font-bold text-white">Pendidikan Teknik Informatika / Ilmu Komputer</h3>
+                        <span class="text-xs font-semibold px-3 py-1 rounded-full bg-brand-card border border-brand-border text-neutral-400 w-fit">2020 — 2024</span>
+                    </div>
+                    <p class="text-xs font-semibold text-neutral-400 mb-3">Gelar Sarjana / Academic</p>
+                    <p class="text-neutral-400 text-sm leading-relaxed bg-brand-card p-5 rounded-2xl border border-brand-border">
+                        Mempelajari fondasi struktur data, algoritma pemrosesan, pengembangan perangkat lunak, dan keamanan sistem informasi.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-6 md:px-12 border-t border-brand-border relative">
+        <div class="max-w-7xl mx-auto">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                
+                <!-- Left Info Box -->
+                <div class="lg:col-span-5 space-y-6 reveal">
+                    <p class="text-brand-red font-semibold text-sm tracking-wider uppercase">// Kontak Habib</p>
+                    <h2 class="text-3xl md:text-5xl font-extrabold text-white leading-tight">Mari Bicara Tentang Proyek Anda</h2>
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        Punya ide proyek menarik, butuh pembuatan website, atau sekadar ingin berdiskusi? Jangan ragu untuk menghubungi saya!
+                    </p>
+
+                    <div class="space-y-4 pt-4">
+                        <!-- Email Item -->
+                        <div class="flex items-center gap-4 p-4 rounded-xl bg-brand-card border border-brand-border">
+                            <div class="w-12 h-12 rounded-lg bg-brand-red/10 border border-brand-red/30 text-brand-red flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div class="overflow-hidden">
+                                <p class="text-[11px] text-neutral-500 uppercase font-semibold">Email Langsung</p>
+                                <p id="email-text" class="text-sm font-bold text-white truncate">habibarroyyan@example.com</p>
+                            </div>
+                            <button id="copy-email-btn" class="ml-auto p-2 text-neutral-400 hover:text-brand-red transition-colors text-sm" title="Salin Email">
+                                <i class="fa-solid fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <!-- Location Item -->
+                        <div class="flex items-center gap-4 p-4 rounded-xl bg-brand-card border border-brand-border">
+                            <div class="w-12 h-12 rounded-lg bg-brand-red/10 border border-brand-red/30 text-brand-red flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <p class="text-[11px] text-neutral-500 uppercase font-semibold">Lokasi</p>
+                                <p class="text-sm font-bold text-white">Indonesia</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Form Box -->
+                <div class="lg:col-span-7 reveal">
+                    <form id="contact-form" class="bg-brand-card p-8 rounded-3xl border border-brand-border space-y-5 shadow-2xl relative">
+                        
+                        <!-- Notification Toast Box (Replaces Alert) -->
+                        <div id="form-toast" class="hidden mb-4 p-4 rounded-xl bg-emerald-500/20 border border-emerald-500 text-emerald-400 text-xs font-medium flex items-center gap-3">
+                            <i class="fa-solid fa-circle-check text-base"></i>
+                            <span>Pesan berhasil dikirim! Habib akan membalas segera.</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label for="name" class="block text-xs font-semibold text-neutral-300 mb-2">Nama Lengkap</label>
+                                <input type="text" id="name" required placeholder="Masukkan nama Anda" 
+                                    class="w-full bg-neutral-900 border border-brand-border rounded-xl px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-brand-red transition-colors">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-xs font-semibold text-neutral-300 mb-2">Alamat Email</label>
+                                <input type="email" id="email" required placeholder="nama@email.com" 
+                                    class="w-full bg-neutral-900 border border-brand-border rounded-xl px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-brand-red transition-colors">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="subject" class="block text-xs font-semibold text-neutral-300 mb-2">Subjek / Topik</label>
+                            <input type="text" id="subject" required placeholder="Misal: Penawaran Proyek Website" 
+                                class="w-full bg-neutral-900 border border-brand-border rounded-xl px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-brand-red transition-colors">
+                        </div>
+
+                        <div>
+                            <label for="message" class="block text-xs font-semibold text-neutral-300 mb-2">Detail Pesan</label>
+                            <textarea id="message" rows="4" required placeholder="Ceritakan detail kebutuhan Anda..." 
+                                class="w-full bg-neutral-900 border border-brand-border rounded-xl px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-brand-red transition-colors resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 rounded-xl bg-brand-red hover:bg-brand-red-hover text-white font-bold text-sm transition-all duration-300 shadow-lg shadow-brand-red/30 hover:shadow-brand-red/50 flex items-center justify-center gap-2">
+                            <span>Kirim Pesan</span>
+                            <i class="fa-solid fa-paper-plane text-xs"></i>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 px-6 md:px-12 bg-neutral-950 border-t border-brand-border">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+            
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded bg-brand-red text-white text-xs font-bold flex items-center justify-center">HA</div>
+                <p class="text-xs text-neutral-500">
+                    &copy; <span id="year"></span> <span class="text-white font-semibold">Habib Arroyyan</span>. Hak Cipta Dilindungi.
+                </p>
+            </div>
+
+            <div class="flex items-center gap-6 text-xs text-neutral-400">
+                <a href="#hero" class="hover:text-brand-red transition-colors">Atas</a>
+                <a href="#about" class="hover:text-brand-red transition-colors">Tentang</a>
+                <a href="#projects" class="hover:text-brand-red transition-colors">Proyek</a>
+                <a href="#contact" class="hover:text-brand-red transition-colors">Kontak</a>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Back To Top Floating Button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-brand-red text-white flex items-center justify-center text-lg shadow-xl shadow-brand-red/40 opacity-0 pointer-events-none transition-all duration-300 hover:scale-110 z-40" aria-label="Kembali ke Atas">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // 1. Set Copyright Year
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            // 2. Typing Effect for Subtitle Roles
+            const roles = ["Software Developer", "Web Engineer", "UI/UX Designer", "Problem Solver"];
+            let roleIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            const typedTextSpan = document.getElementById('typed-text');
+
+            function typeEffect() {
+                const currentRole = roles[roleIndex];
+                if (isDeleting) {
+                    typedTextSpan.textContent = currentRole.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    typedTextSpan.textContent = currentRole.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+
+                let typeSpeed = isDeleting ? 50 : 100;
+
+                if (!isDeleting && charIndex === currentRole.length) {
+                    typeSpeed = 2000; // Pause at end
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    roleIndex = (roleIndex + 1) % roles.length;
+                    typeSpeed = 500;
+                }
+
+                setTimeout(typeEffect, typeSpeed);
+            }
+            typeEffect();
+
+            // 3. Mobile Navigation Toggle
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // 4. Navbar Blur Background & Back to Top Button on Scroll
+            const navbar = document.getElementById('navbar');
+            const backToTopBtn = document.getElementById('back-to-top');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-brand-dark/90', 'border-brand-border', 'py-3');
+                    navbar.classList.remove('py-5', 'border-transparent');
+                } else {
+                    navbar.classList.remove('bg-brand-dark/90', 'border-brand-border', 'py-3');
+                    navbar.classList.add('py-5', 'border-transparent');
+                }
+
+                if (window.scrollY > 400) {
+                    backToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+                    backToTopBtn.classList.add('opacity-100');
+                } else {
+                    backToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+                    backToTopBtn.classList.remove('opacity-100');
+                }
+            });
+
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // 5. Scroll Reveal Intersection Observer
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            reveals.forEach(reveal => observer.observe(reveal));
+
+            // 6. Project Filter Functionality
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const projectItems = document.querySelectorAll('.project-item');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => {
+                        b.classList.remove('bg-brand-red', 'text-white', 'active');
+                        b.classList.add('bg-brand-card', 'border', 'border-brand-border', 'text-neutral-300');
+                    });
+                    btn.classList.remove('bg-brand-card', 'border', 'border-brand-border', 'text-neutral-300');
+                    btn.classList.add('bg-brand-red', 'text-white', 'active');
+
+                    const filterValue = btn.getAttribute('data-filter');
+
+                    projectItems.forEach(item => {
+                        if (filterValue === 'all' || item.classList.contains(filterValue)) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // 7. Copy Email to Clipboard Helper
+            const copyEmailBtn = document.getElementById('copy-email-btn');
+            const emailText = document.getElementById('email-text').innerText;
+
+            copyEmailBtn.addEventListener('click', () => {
+                const tempInput = document.createElement('input');
+                tempInput.value = emailText;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+
+                // Quick visual indicator feedback
+                const icon = copyEmailBtn.querySelector('i');
+                icon.className = 'fa-solid fa-check text-emerald-400';
+                setTimeout(() => {
+                    icon.className = 'fa-solid fa-copy';
+                }, 2000);
+            });
+
+            // 8. Contact Form Handling
+            const contactForm = document.getElementById('contact-form');
+            const formToast = document.getElementById('form-toast');
+
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                formToast.classList.remove('hidden');
+                contactForm.reset();
+
+                setTimeout(() => {
+                    formToast.classList.add('hidden');
+                }, 5000);
+            });
+
+        });
+    </script>
+</body>
+</html>
