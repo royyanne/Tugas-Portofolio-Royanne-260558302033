@@ -5,9 +5,11 @@ Website portofolio pribadi modern dan responsif untuk Habib Arroyyan.
 ## ✨ Fitur
 - **Desain Modern**: Tema gelap (*Dark Mode*) dengan aksen merah khas serta efek glowing.
 - **Responsif**: Tampilan optimal di semua perangkat (Desktop, Tablet, dan Mobile).
-- **Animasi Halus**: Typing text effect, scroll reveal animation, dan efek transisi interaktif.
-- **Showcase Proyek**: Filter kategori proyek (*All, Web App, UI/UX*).
-- **Fitur Kontak**: Fitur sekali klik salin email (*Copy to Clipboard*) dan form interaktif.
+- **Animasi Halus**: Scroll reveal dan transisi pada elemen interaktif.
+- **Profil**: Riwayat TRPL dan proyek mandiri/akademik tanpa klaim pengalaman kerja yang belum dikonfirmasi.
+- **Showcase Proyek**: Carousel proyek berulang yang dapat digeser dengan mouse, touchpad, atau kontrol tombol; gambar dapat diperbesar untuk inspeksi.
+- **Proyek Pilihan**: E-Report, Stockify, Kostly, dan GreenBite dengan tangkapan layar proyek masing-masing.
+- **Fitur Kontak**: Tautan WhatsApp langsung dan form pesan yang membuka chat dengan isi pesan terformat.
 
 ## 🛠️ Teknologi yang Digunakan
 - **HTML5 & CSS3**
